@@ -14,31 +14,21 @@ def consultaReceita():
   URL = ('https://www.receitaws.com.br/v1/cnpj/' + CNPJ)
 
   r = requests.get(url = URL)
-
   data = r.json()
-
   status = data['status']
-
   f = open("RelCNPJ.txt", "a")
-
   if status == 'OK':
     situacao = data['situacao']
-
     if situacao == 'ATIVA':
-      print('A situação do CNPJ '+CNPJ+' é '+ str(situacao))
-      
+      print('A situação do CNPJ '+CNPJ+' é '+ str(situacao))      
     else:
       f.write('\n A situação do CNPJ '+CNPJ+' é '+ str(situacao))
-
   elif status == 'ERROR':
     mensagem = data['message']
-
     if (len(mensagem) > 20):
       f.write('\n'+CNPJ+ ' CNPJ Rejeitado pela Receita')
-
     else:
-      f.write('\n'+CNPJ+ ' CNPJ Inválido')
-    
+      f.write('\n'+CNPJ+ ' CNPJ Inválido')    
   f.close()
 
 
@@ -64,38 +54,27 @@ def valida_base_cnpj(filename):
                 time.sleep(21)
                 print(datetime.datetime.now())
                 URL = ('https://www.receitaws.com.br/v1/cnpj/' + CNPJ)
-
                 r = requests.get(url = URL)
-
                 data = r.json()
-
                 status = data['status']
-
                 f = open("RelCNPJ.txt", "a")
-
                 if status == 'OK':
                     situacao = data['situacao']
-
                     if situacao == 'ATIVA':
-                        print('A situação do CNPJ '+CNPJ+' é '+ str(situacao))
-                        
+                        print('A situação do CNPJ '+CNPJ+' é '+ str(situacao))                        
                     else:
                         f.write('\n A situação do CNPJ '+CNPJ+' é '+ str(situacao))
                         print('A situação do CNPJ '+CNPJ+' é '+ str(situacao))
-
                 elif status == 'ERROR':
                     mensagem = data['message']
-
                 if (len(mensagem) > 20):
                     f.write('\n'+CNPJ+ ' CNPJ Rejeitado pela Receita')
                     print('A situação do CNPJ '+CNPJ+' é '+ str(situacao))
-
                 else:
                     f.write('\n'+CNPJ+ ' CNPJ Inválido')
-                    print('A situação do CNPJ '+CNPJ+' é '+ str(situacao))
-                
+                    print('A situação do CNPJ '+CNPJ+' é '+ str(situacao))                
                 f.close()
 
 
-#geraCsv('contratantes.xlsx')            
-#valida_base_cnpj('Exportar Planilha.csv')
+geraCsv('contratantes.xlsx')            
+valida_base_cnpj('Exportar Planilha.csv')
